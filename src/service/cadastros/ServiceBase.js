@@ -4,7 +4,7 @@ export class ServiceBase {
 
 
     constructor(urlBase) {
-        this.url = process.env.REACT_APP_URI_API + '/' + urlBase + '/';
+        this.url = process.env.REACT_APP_URI_API + '/'+urlBase+'/';
     }
 
     listarTodos() {
