@@ -46,6 +46,7 @@ import './assets/layout/layout.scss';
 import './App.scss';
 import Aluno from "./pages/cadastros/Aluno";
 import Curso from "./pages/cadastros/Curso";
+import Disciplina from "./pages/cadastros/Disciplina";
 
 const App = () => {
     const [layoutMode, setLayoutMode] = useState('static');
@@ -169,6 +170,7 @@ const App = () => {
             items: [
                 { label: 'Aluno', icon: 'pi pi-fw pi-user', to: '/aluno' },
                 { label: 'Curso', icon: 'pi pi-fw pi-book', to: '/curso' },
+                { label: 'Disciplina', icon: 'pi pi-fw pi-book', to: '/disciplina' },
             ]
         },
         {
@@ -328,6 +330,7 @@ const App = () => {
                     <Route path="/crud" component={Crud} />
                     <Route path="/aluno" component={Aluno} />
                     <Route path="/curso" component={Curso} />
+                    <Route path="/disciplina" component={Disciplina} />
                     <Route path="/empty" component={EmptyPage} />
                     <Route path="/documentation" component={Documentation} />
                 </div>
