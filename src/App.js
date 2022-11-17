@@ -30,8 +30,6 @@ import BlocksDemo from './components/BlocksDemo';
 import IconsDemo from './components/IconsDemo';
 
 import Crud from './pages/Crud';
-import Estado from './pages/cadastros/Estado';
-import Cidade from './pages/cadastros/Cidade';
 import EmptyPage from './pages/EmptyPage';
 import TimelineDemo from './pages/TimelineDemo';
 
@@ -46,6 +44,7 @@ import './assets/demo/flags/flags.css';
 import './assets/demo/Demos.scss';
 import './assets/layout/layout.scss';
 import './App.scss';
+import Aluno from "./pages/cadastros/Aluno";
 
 const App = () => {
     const [layoutMode, setLayoutMode] = useState('static');
@@ -163,6 +162,12 @@ const App = () => {
             items: [{
                 label: 'Dashboard', icon: 'pi pi-fw pi-home', to: '/'
             }]
+        },
+        {
+            label: 'Cadastros', icon: 'pi pi-fw pi-sitemap',
+            items: [
+                { label: 'Aluno', icon: 'pi pi-fw pi-user', to: '/aluno' },
+            ]
         },
         {
             label: 'UI Components', icon: 'pi pi-fw pi-sitemap',
@@ -319,8 +324,7 @@ const App = () => {
                     <Route path="/misc" component={MiscDemo} />
                     <Route path="/timeline" component={TimelineDemo} />
                     <Route path="/crud" component={Crud} />
-                    <Route path="/estado" component={Estado} />
-                    <Route path="/cidade" component={Cidade} />
+                    <Route path="/aluno" component={Aluno} />
                     <Route path="/empty" component={EmptyPage} />
                     <Route path="/documentation" component={Documentation} />
                 </div>
