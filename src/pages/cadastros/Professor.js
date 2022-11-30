@@ -1,22 +1,17 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import classNames from 'classnames';
-import { useFormik } from 'formik';
-import { DataTable } from 'primereact/datatable';
-import { Column } from 'primereact/column';
-import { Toast } from 'primereact/toast';
-import { Button } from 'primereact/button';
-import { Toolbar } from 'primereact/toolbar';
-import { Dialog } from 'primereact/dialog';
-import { InputText } from 'primereact/inputtext';
-import { AlunoService } from '../../service/cadastros/AlunoService';
-import { Dropdown } from 'primereact/dropdown';
-import { InputMask } from 'primereact/inputmask';
-import { MultiSelect } from 'primereact/multiselect';
+import {useFormik} from 'formik';
+import {DataTable} from 'primereact/datatable';
+import {Column} from 'primereact/column';
+import {Toast} from 'primereact/toast';
+import {Button} from 'primereact/button';
+import {Toolbar} from 'primereact/toolbar';
+import {Dialog} from 'primereact/dialog';
+import {InputText} from 'primereact/inputtext';
+import {ProfessorService} from '../../service/cadastros/ProfessorService';
+import {InputMask} from 'primereact/inputmask';
 
-
-//{nome:'Frank', permissaoAlunos:[{permissao:{id:55}}]}
-
-const Aluno = () => {
+const Professor = () => {
 
     let objetoNovo = {
         nome: '',
@@ -36,7 +31,7 @@ const Aluno = () => {
     const [globalFilter, setGlobalFilter] = useState(null);
     const toast = useRef(null);
     const dt = useRef(null);
-    const objetoService = new AlunoService();
+    const objetoService = new ProfessorService();
 
     const formik = useFormik({
         enableReinitialize: true,
@@ -50,9 +45,8 @@ const Aluno = () => {
 
             if (!data.email) {
                 errors.email = 'Email é obrigatório';
-            }
-            else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(data.email)) {
-                errors.email = 'Email é inválido. Exemplo: usuario@gmail.com';
+            } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(data.email)) {
+                errors.email = 'Email é inválido. Exemplo: jose@gmail.com';
             }
 
             return errors;
@@ -89,7 +83,6 @@ const Aluno = () => {
     }
 
 
-
     const saveObjeto = () => {
         setSubmitted(true);
 
@@ -97,13 +90,12 @@ const Aluno = () => {
             let _objeto = formik.values;
             if (objeto.id) {
                 objetoService.alterar(_objeto).then(data => {
-                    toast.current.show({ severity: 'success', summary: 'Sucesso', detail: 'Alterado com Sucesso', life: 3000 });
+                    toast.current.show({severity: 'success', summary: 'Sucesso', detail: 'Alterado com Sucesso', life: 3000});
                     setObjetos(null);
                 });
-            }
-            else {
+            } else {
                 objetoService.inserir(_objeto).then(data => {
-                    toast.current.show({ severity: 'success', summary: 'Sucesso', detail: 'Inserido com Sucesso', life: 3000 });
+                    toast.current.show({severity: 'success', summary: 'Sucesso', detail: 'Inserido com Sucesso', life: 3000});
                     setObjetos(null);
                 });
 
@@ -114,7 +106,7 @@ const Aluno = () => {
     }
 
     const editObjeto = (objeto) => {
-        setObjeto({ ...objeto });
+        setObjeto({...objeto});
         setObjetoDialog(true);
     }
 
@@ -126,7 +118,7 @@ const Aluno = () => {
     const deleteObjeto = () => {
 
         objetoService.excluir(objeto.id).then(data => {
-            toast.current.show({ severity: 'success', summary: 'Sucesso', detail: 'Removido', life: 3000 });
+            toast.current.show({severity: 'success', summary: 'Sucesso', detail: 'Removido', life: 3000});
 
             setObjetos(null);
             setObjetoDeleteDialog(false);
@@ -136,7 +128,7 @@ const Aluno = () => {
 
     const onInputChange = (e, name) => {
         const val = (e.target && e.target.value) || '';
-        let _objeto = { ...objeto };
+        let _objeto = {...objeto};
         _objeto[`${name}`] = val;
 
         setObjeto(_objeto);
@@ -151,7 +143,7 @@ const Aluno = () => {
         return (
             <React.Fragment>
                 <div className="my-2">
-                    <Button label="Novo Aluno" icon="pi pi-plus" className="p-button-success mr-2" onClick={openNew} />
+                    <Button label="Novo Professor" icon="pi pi-plus" className="p-button-success mr-2" onClick={openNew}/>
 
                 </div>
             </React.Fragment>
@@ -215,8 +207,8 @@ const Aluno = () => {
     const actionBodyTemplate = (rowData) => {
         return (
             <div className="actions">
-                <Button icon="pi pi-pencil" className="p-button-rounded p-button-success mr-2" onClick={() => editObjeto(rowData)} />
-                <Button icon="pi pi-trash" className="p-button-rounded p-button-warning mt-2" onClick={() => confirmDeleteObjeto(rowData)} />
+                <Button icon="pi pi-pencil" className="p-button-rounded p-button-success mr-2" onClick={() => editObjeto(rowData)}/>
+                <Button icon="pi pi-trash" className="p-button-rounded p-button-warning mt-2" onClick={() => confirmDeleteObjeto(rowData)}/>
             </div>
         );
     }
@@ -226,23 +218,23 @@ const Aluno = () => {
         <div className="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
             <h5 className="m-0">Registros Cadastrados</h5>
             <span className="block mt-2 md:mt-0 p-input-icon-left">
-                <i className="pi pi-search" />
-                <InputText type="search" onInput={(e) => setGlobalFilter(e.target.value)} placeholder="Buscar..." />
+                <i className="pi pi-search"/>
+                <InputText type="search" onInput={(e) => setGlobalFilter(e.target.value)} placeholder="Buscar..."/>
             </span>
         </div>
     );
 
     const objetoDialogFooter = (
         <>
-            <Button label="Cancelar" icon="pi pi-times" className="p-button-text" onClick={hideDialog} />
-            <Button type="submit" form="formularioAluno" label="Salvar" icon="pi pi-check" className="p-button-text" />
+            <Button label="Cancelar" icon="pi pi-times" className="p-button-text" onClick={hideDialog}/>
+            <Button type="submit" form="formularioProfessor" label="Salvar" icon="pi pi-check" className="p-button-text"/>
         </>
     );
 
     const deleteObjetoDialogFooter = (
         <>
-            <Button label="Não" icon="pi pi-times" className="p-button-text" onClick={hideDeleteObjetoDialog} />
-            <Button label="Sim" icon="pi pi-check" className="p-button-text" onClick={deleteObjeto} />
+            <Button label="Não" icon="pi pi-times" className="p-button-text" onClick={hideDeleteObjetoDialog}/>
+            <Button label="Sim" icon="pi pi-check" className="p-button-text" onClick={deleteObjeto}/>
         </>
     );
 
@@ -250,7 +242,7 @@ const Aluno = () => {
         <div className="grid crud-demo">
             <div className="col-12">
                 <div className="card">
-                    <Toast ref={toast} />
+                    <Toast ref={toast}/>
                     <Toolbar className="mb-4" left={leftToolbarTemplate}></Toolbar>
 
                     <DataTable ref={dt} value={objetos}
@@ -258,49 +250,49 @@ const Aluno = () => {
                                paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
                                currentPageReportTemplate="Mostrando {first} de {last}. Total de {totalRecords}"
                                globalFilter={globalFilter} emptyMessage="Sem objetos cadastrados." header={header} responsiveLayout="scroll">
-                        <Column field="id" header="ID" sortable body={idBodyTemplate} headerStyle={{ width: '14%', minWidth: '10rem' }}></Column>
-                        <Column field="nome" header="Nome" sortable body={nomeBodyTemplate} headerStyle={{ width: '14%', minWidth: '10rem' }}></Column>
-                        <Column field="cpf" header="CPF" sortable body={cpfBodyTemplate} headerStyle={{ width: '14%', minWidth: '10rem' }}></Column>
-                        <Column field="email" header="E-mail" sortable body={emailBodyTemplate} headerStyle={{ width: '14%', minWidth: '10rem' }}></Column>
-                        <Column field="telefone" header="Telefone" sortable body={telefoneBodyTemplate} headerStyle={{ width: '14%', minWidth: '10rem' }}></Column>
-                        <Column field="observacao" header="Observação" sortable body={observacaoBodyTemplate} headerStyle={{ width: '14%', minWidth: '10rem' }}></Column>
+                        <Column field="id" header="ID" sortable body={idBodyTemplate} headerStyle={{width: '14%', minWidth: '10rem'}}></Column>
+                        <Column field="nome" header="Nome" sortable body={nomeBodyTemplate} headerStyle={{width: '14%', minWidth: '10rem'}}></Column>
+                        <Column field="cpf" header="CPF" sortable body={cpfBodyTemplate} headerStyle={{width: '14%', minWidth: '10rem'}}></Column>
+                        <Column field="email" header="E-mail" sortable body={emailBodyTemplate} headerStyle={{width: '14%', minWidth: '10rem'}}></Column>
+                        <Column field="telefone" header="Telefone" sortable body={telefoneBodyTemplate} headerStyle={{width: '14%', minWidth: '10rem'}}></Column>
+                        <Column field="observacao" header="Observação" sortable body={observacaoBodyTemplate} headerStyle={{width: '14%', minWidth: '10rem'}}></Column>
                         <Column body={actionBodyTemplate}></Column>
                     </DataTable>
 
-                    <Dialog visible={objetoDialog} style={{ width: '450px' }} header="Cadastrar/Editar" modal className="p-fluid" footer={objetoDialogFooter} onHide={hideDialog}>
-                        <form id="formularioAluno" onSubmit={formik.handleSubmit}>
+                    <Dialog visible={objetoDialog} style={{width: '450px'}} header="Cadastrar/Editar" modal className="p-fluid" footer={objetoDialogFooter} onHide={hideDialog}>
+                        <form id="formularioProfessor" onSubmit={formik.handleSubmit}>
                             <div className="field">
                                 <label htmlFor="nome">Nome*</label>
-                                <InputText id="nome" value={formik.values.nome} onChange={formik.handleChange} autoFocus className={classNames({ 'p-invalid': isFormFieldValid('nome') })} />
+                                <InputText id="nome" value={formik.values.nome} onChange={formik.handleChange} autoFocus className={classNames({'p-invalid': isFormFieldValid('nome')})}/>
                                 {getFormErrorMessage('nome')}
                             </div>
 
                             <div className="field">
                                 <label htmlFor="cpf">CPF*</label>
-                                <InputMask mask="999.999.999-99" id="cpf" value={formik.values.cpf} onChange={formik.handleChange} />
+                                <InputMask mask="999.999.999-99" id="cpf" value={formik.values.cpf} onChange={formik.handleChange}/>
                             </div>
 
                             <div className="field">
                                 <label htmlFor="email">E-mail*</label>
-                                <InputText id="email" value={formik.values.email} onChange={formik.handleChange} className={classNames({ 'p-invalid': isFormFieldValid('email') })} />
+                                <InputText id="email" value={formik.values.email} onChange={formik.handleChange} className={classNames({'p-invalid': isFormFieldValid('email')})}/>
                                 {getFormErrorMessage('email')}
                             </div>
 
                             <div className="field">
                                 <label htmlFor="telefone">Telefone</label>
-                                <InputMask mask="(99) 9 9999-9999" id="telefone" value={formik.values.telefone} onChange={formik.handleChange} />
+                                <InputMask mask="(99) 9 9999-9999" id="telefone" value={formik.values.telefone} onChange={formik.handleChange}/>
                             </div>
 
                             <div className="field">
                                 <label htmlFor="observacao">Observação</label>
-                                <InputText id="observacao" value={formik.values.observacao} onChange={formik.handleChange} />
+                                <InputText id="observacao" value={formik.values.observacao} onChange={formik.handleChange}/>
                             </div>
                         </form>
                     </Dialog>
 
-                    <Dialog visible={objetoDeleteDialog} style={{ width: '450px' }} header="Confirmação" modal footer={deleteObjetoDialogFooter} onHide={hideDeleteObjetoDialog}>
+                    <Dialog visible={objetoDeleteDialog} style={{width: '450px'}} header="Confirmação" modal footer={deleteObjetoDialogFooter} onHide={hideDeleteObjetoDialog}>
                         <div className="flex align-items-center justify-content-center">
-                            <i className="pi pi-exclamation-triangle mr-3" style={{ fontSize: '2rem' }} />
+                            <i className="pi pi-exclamation-triangle mr-3" style={{fontSize: '2rem'}}/>
                             {objeto && <span>Deseja Excluir?</span>}
                         </div>
                     </Dialog>
@@ -316,4 +308,4 @@ const comparisonFn = function (prevProps, nextProps) {
     return prevProps.location.pathname === nextProps.location.pathname;
 };
 
-export default React.memo(Aluno, comparisonFn);
+export default React.memo(Professor, comparisonFn);
